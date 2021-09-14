@@ -32,13 +32,13 @@ int main() {
     }
     
     cout << "Input matrix:" << endl;
-    printList(first);
+    //printList(first);
     printMatrix(first, row, col);
 
     changeMatrix(&first, col);
     
     cout << "Output matrix:" << endl;
-    printList(first);
+    //printList(first);
     printMatrix(first, row, col);
     
     erase(&first);
