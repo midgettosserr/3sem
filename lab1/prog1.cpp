@@ -31,7 +31,7 @@ void create_new_node(List **p, int row_index, int col_index, double x) {
     }
 }
 
-void printList(List *start) {
+/*void printList(List *start) {
     List *ptr = start;
     cout << "row_pos: ";
     while (ptr != nullptr) {
@@ -55,7 +55,7 @@ void printList(List *start) {
         ptr = ptr->next;
     }
     cout << endl;
-}
+}*/
 
 void printMatrix(List *start, int n, int m) {
     List *ptr = start;
