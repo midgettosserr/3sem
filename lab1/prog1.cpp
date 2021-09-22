@@ -21,8 +21,7 @@ void create_new_node(List **p, int row_index, int col_index, double x) {
     if (temp == nullptr) {
         temp = makeNode(row_index, col_index, x, nullptr);
         *p = temp;
-    }
-    
+    } 
     else {
         while (temp->next != nullptr)
             temp = temp->next;
