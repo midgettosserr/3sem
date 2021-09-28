@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "prog1.h"
 
 using namespace std;
@@ -57,15 +58,16 @@ void create_new_node(List **p, int row_index, int col_index, double x) {
 }*/
 
 void printMatrix(List *start, int n, int m) {
+    cout << fixed << setprecision(1);
     List *ptr = start;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             if (ptr != nullptr && ptr->row == i && ptr->col == j) {
-                cout << ptr->data << " ";
+                cout << setw(8) << ptr->data;
                 ptr = ptr->next;
             }
             else {
-                cout << "0 ";
+                cout << setw(8) << "0";
             }
         }
         cout << endl;
