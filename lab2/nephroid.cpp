@@ -1,23 +1,43 @@
 #include "nephroid.h"
 #include <iostream>
-#include <math.h>
-#include <iomanip>
-#define _USE_MATH_DEFINES 
+#include <cmath>
+#include <cstring>
+#define _USE_MATH_DEFINES
+
+nephroid::nephroid() {
+    r = 0;
+}
+
+nephroid::nephroid(double a) {
+    if (a < 0)
+        throw invalid_argument("a < 0");
+    r = a;
+}
+
+nephroid::nephroid(const nephroid& neph) {
+    r = neph.r;
+}
+
+void nephroid::set_radius(double a) {
+    if (a < 0)
+        throw invalid_argument("a < 0");
+    r = a;
+}
+
+double nephroid::get_radius() const {
+    return r;
+}
 
 double nephroid::get_len() const {
     return 24 * r;
 }
 
-double nephroid::get_s() const {
+double nephroid::get_area() const {
     return 12 * M_PI * r * r;
 }
 
 double nephroid::get_curvature(double t) const {
-    return abs (3 * r * sin(t));
-}
-
-double nephroid::get_radius() const {
-    return r;
+    return fabs (3 * r * sin(t));
 }
 
 double nephroid::get_x(double t) const {
@@ -28,17 +48,6 @@ double nephroid::get_y(double t) const {
     return (4 * r * pow(sin(t), 3));
 }
 
-std::string nephroid::get_equation() const {
-    std::stringstream s;
-    double a = 4 * r * r, b = 108 * pow(r,4);
-    s << "(x^2++y^2+" << a << ")^3=" << b << "*y^2";
-    std::string str;
-    s >> str;
-    return str;
-}
-
-void nephroid::radius(double rad) {
-    if (rad < 0)
-        cout << "Error! Please repeat the input: ";
-    r = rad;
+void nephroid::get_equation(char str[]) const {
+    sprintf(str, "(x^2+y^2-%.2f)^3 = %.2f*y^2", 4*r*r, 108 * pow(r, 4));
 }
