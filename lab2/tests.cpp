@@ -1,52 +1,59 @@
-#include "nephroid.cpp"
 #include <gtest/gtest.h>
+#include "nephroid.cpp"
+#include <cmath>
+#define _USE_MATH_DEFINES
 
-TEST(nephroid, testget_radius){
-        nephroid a1;
-        ASSERT_EQ(0, a1.get_radius());
-        nephroid a2(15);
-        ASSERT_EQ(15, a2.get_radius());
-        ASSERT_ANY_THROW(nephroid(-78));
+TEST(NephroidConstructor, DefaultConstructor)
+{
+    nephroid n;
+    ASSERT_EQ(n.get_radius(), 0);
 }
 
-TEST(nephroid, testset_radius){
-        nephroid a(10);
-        a.set_radius(17);
-        ASSERT_NEAR(a.get_radius(), 17, 0.1);
-        a.set_radius(5);
-        EXPECT_THROW(a.set_radius(-5), std::exception);
+TEST(NephroidConstructor, InitConstructors)
+{
+    nephroid n1(1);
+    ASSERT_EQ(n1.get_radius(), 1);
+    nephroid n2(n1);
+    ASSERT_EQ(n2.get_radius(), 1);
 }
 
-TEST(nephroid, testget_len){
-        nephroid a(2);
-        ASSERT_EQ(48, a.get_len());
-        nephroid a1(20);
-        ASSERT_EQ(480, a1.get_len());
+TEST(NephroidConstructor, TestException)
+{
+    ASSERT_ANY_THROW(nephroid(-1));
 }
 
-TEST(nephroid, testget_area){
-        nephroid a(4);
-        ASSERT_NEAR(a.get_area(), 602.88, 0.4);
-        nephroid a1(8);
-        ASSERT_NE(2411.52, a1.get_area());
+TEST(NephroidMethods, Setters)
+{
+    nephroid n;
+    n.set_radius(5);
+    ASSERT_EQ(5, n.get_radius());
+    ASSERT_ANY_THROW(n.set_radius(-5));
 }
 
-TEST(nephroid, testget_curvature){
-        nephroid a(7);
-        ASSERT_NEAR(a.get_curvature(M_PI), 0, 0.1);
+TEST(NephroidMethods, Parameters)
+{
+    nephroid n;
+    ASSERT_EQ(0, n.get_len());
+    ASSERT_EQ(0, n.get_area());
+    ASSERT_EQ(0, n.get_curvature(1));
+    ASSERT_EQ(0, n.get_x(1));
+    ASSERT_EQ(0, n.get_y(1));
+    char eq[255];
+    n.get_equation(eq);
+    ASSERT_STREQ("(x^2+y^2-0.00)^3 = 0.00*y^2", eq);
+
+    nephroid n2(1);
+    const double err = 0.00001;
+    ASSERT_EQ(24, n2.get_len());
+    ASSERT_NEAR(12*M_PI, n2.get_area(), err);
+    ASSERT_NEAR(fabs(3*sin(1)), n2.get_curvature(1), err);
+    ASSERT_NEAR(6*cos(1)-4*pow(cos(1), 3), n2.get_x(1), err);
+    ASSERT_NEAR(4*pow(sin(1), 3), n2.get_y(1), err);
+    n2.get_equation(eq);
+    ASSERT_STREQ("(x^2+y^2-4.00)^3 = 108.00*y^2", eq);
 }
 
-TEST(nephroid, testget_x){
-        nephroid a(11);
-        ASSERT_NEAR(a.get_x(M_PI), 0, 23);
-}
-
-TEST(nephroid, testget_y){
-        nephroid a(11);
-        ASSERT_NEAR(a.get_y(M_PI), 0, 0.1);
-}
-
-int main(int argc, char **argv) {
-    testing::InitGoogleTest(&argc, argv);
+int main(int argc, char* argv[]){
+    ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
