@@ -14,9 +14,9 @@ nephroid::nephroid(double a) {
     r = a;
 }
 
-nephroid::nephroid(const nephroid& neph) {
+/*nephroid::nephroid(const nephroid& neph) {
     r = neph.r;
-}
+}*/
 
 void nephroid::set_radius(double a) {
     if (a < 0)
