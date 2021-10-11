@@ -8,7 +8,7 @@ class nephroid {
   public:
     nephroid();
     nephroid(double a);
-    nephroid(const nephroid&);
+    //nephroid(const nephroid&);
 
     void set_radius(double);
     double get_radius() const;
