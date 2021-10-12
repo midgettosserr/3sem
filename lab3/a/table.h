@@ -11,16 +11,9 @@ struct Element {
     int busy;
     int key;
     char info[INFO_SIZE];
-
-    Element() : busy(0), key(0) {
-        info[0] = '\0';
-    }
-
-    std::istream& input(std::istream& in) {
-        busy = 1;
-        in >> key >> info;
-        return in;
-    }
+    Element();
+    std::istream& input(std::istream& in);
+    std::ostream& print(std::ostream& out) const;
 };
 
 class Table {
@@ -29,12 +22,12 @@ private:
 public:
     Table() {};
     Table(int keys[], char infos[][INFO_SIZE], int size);
-    void print(std::ostream& out) const;
-    Element* find(int key) const;
+    std::ostream& print(std::ostream& out) const;
+    const Element* find(int key) const;
     void add(const Element& element);
-    char* getInfo(int key) const;
+    const char* getInfo(int key) const;
     void erase(int key);
-    void reorganize();
+    //void reorganize();
 };
 
 #endif
