@@ -3,12 +3,7 @@
 
 using namespace std;
 
-int main() {
-    nephroid neph;
-    int menu;
-    double a, t;
-    char str[255];
-    do {
+void printmenu(){
         cout << "1 - Set radius of nephroid" << endl;
         cout << "2 - Get radius of nephroid" << endl;
         cout << "3 - Get arclength" << endl;
@@ -18,6 +13,15 @@ int main() {
         cout << "7 - Get the equation of implicit representation" << endl;
         cout << "0 - Quit" << endl;
         cout << "> ";
+}
+
+int main() {
+    nephroid neph;
+    int menu;
+    double a, t;
+    char str[255];
+    do {
+        printmenu();
         cin >> menu;
         switch (menu) {
             case 1:
