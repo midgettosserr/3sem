@@ -27,7 +27,7 @@ public:
     void add(const Element& element);
     const char* getInfo(int key) const;
     void erase(int key);
-    //void reorganize();
+    void reorganize();
 };
 
 #endif
