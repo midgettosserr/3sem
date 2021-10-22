@@ -79,6 +79,20 @@ void Table::erase(int key) {
     }
 }
 
-/*void Table::reorganize() {
-
-}*/
+void Table::reorganize() {
+        for (int i = 0; i < SIZE; i++) {
+                if (!elements[i].busy){
+                        int j = i + 1;
+                        while (j < SIZE && !elements[j].busy){
+                                j++;
+                        }
+                        if (j < SIZE){
+                                elements[i] = elements[j];
+                                elements[j].busy = 0;
+                        }
+                        else {
+                                break;
+                        }
+                }
+        }
+}
