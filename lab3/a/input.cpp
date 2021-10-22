@@ -108,6 +108,8 @@ void menu(Table& table, int menu) {
             cout << "Element removed" << endl;
             break;
         case 7:
+            table.reorganize();
+            cout << "Table reorganized" << endl;
             break;
         default:
             break;
