@@ -122,3 +122,25 @@ Table& Table::operator-=(int key) {
 const char* Table::operator[](int key) {
     return getInfo(key);
 }
+
+Table Table::operator+(const Table& table) const {
+    Table sum;
+    int j = 0;
+    for (int i = 0; i < SIZE; i++) {
+        if (elements[i].busy) {
+            if (j >= SIZE) {
+                throw TableException("sum overflow");
+            }
+            sum.elements[j++] = elements[i];
+        }
+    }
+    for (int i = 0; i < SIZE; i++) {
+        if (table.elements[i].busy) {
+            if (j >= SIZE) {
+                throw TableException("sum overflow");
+            }
+            sum.elements[j++] = table.elements[i];
+        }
+    }
+    return sum;
+}
