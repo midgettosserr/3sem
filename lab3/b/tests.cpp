@@ -138,6 +138,30 @@ TEST(TableMethods, Reorganize) {
     outTest(table, str, 3);
 }
 
+TEST(TableMethods, OperatorSum)
+{
+    const char* strings[] {"ab", "cd", "ef", "123", "456"};
+    Table table1;
+    for (int i = 0; i < SIZE/2; i++) {
+        Element el;
+        el.key = i;
+        strcpy(el.info, strings[i]);
+        table1 += el;
+    }
+    Table table2;
+    for (int i = SIZE/2; i < SIZE; i++) {
+        Element el;
+        el.key = i;
+        strcpy(el.info, strings[i]);
+        table2 += el;
+    }
+    Table sum = table1 + table2;
+    char str[][255]{"0 ab", "1 cd", "2 ef", "3 123", "4 456", "5 789"};
+    outOpTest(sum, str, 5);
+    table1 += Element();
+    ASSERT_ANY_THROW(sum = table1 + table2);
+}
+
 int main(int argc, char* argv[]) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
