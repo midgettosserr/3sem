@@ -40,6 +40,7 @@ void printMenu() {
     cout << "5 - Get info" << endl;
     cout << "6 - Remove element" << endl;
     cout << "7 - Reorganize table" << endl;
+    cout << "8 - Find sum table+table" << endl;
     cout << "0 - Exit" << endl;
     cout << "> ";
 }
@@ -48,6 +49,7 @@ void menu(Table& table, int menu) {
     Element element;
     const Element *ptr;
     int key;
+    Table sum;
     switch (menu) {
         case 1:
             cout << "Input key and info: ";
@@ -99,6 +101,14 @@ void menu(Table& table, int menu) {
         case 7:
             table.reorganize();
             cout << "Table reorganized" << endl;
+            break;
+        case 8:
+            try {
+                sum = table + table;
+                cout << sum << endl;
+            } catch (TableException ex) {
+                cout << ex.what() << endl;
+            }
             break;
         default:
             break;
