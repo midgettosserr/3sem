@@ -97,7 +97,7 @@ const Element* Table::find(int key) const {
     return nullptr;
 }
 
-void Table::add(const Element& element) {
+Table& Table::add(const Element& element) {
     bool added = false;
     for (int i = 0; i < size; i++) {
         if (!elements[i].busy) {
@@ -115,7 +115,9 @@ void Table::add(const Element& element) {
         delete [] elements;
         elements = tmp;
         elements[size++] = element;
+        elements[size-1].busy = 1;
     }
+    return *this;
 }
 
 const char* Table::getInfo(int key) const {
@@ -128,16 +130,17 @@ const char* Table::getInfo(int key) const {
     }
 }
 
-void Table::erase(int key) {
+Table& Table::erase(int key) {
     for (int i = 0; i < size; i++) {
         if (elements[i].busy && elements[i].key == key) {
             elements[i] = Element();
             break;
         }
     }
+    return *this;
 }
 
-void Table::reorganize() {
+Table& Table::reorganize() {
     int N = 0;
     for (int i = 0; i < size; i++) {
         N += elements[i].busy;
@@ -151,6 +154,7 @@ void Table::reorganize() {
     delete [] elements;
     elements = tmp;
     size = N;
+    return *this;
 }
 
 std::ostream& operator<<(std::ostream& out, const Table& table) {
@@ -194,4 +198,22 @@ Table& Table::operator=(const Table& table) {
 
 Table::~Table() {
     delete [] elements;
+}
+
+Table Table::operator+(const Table& table) const {
+    Table sum;
+    sum.size = size + table.size;
+    sum.elements = new Element[sum.size];
+    int j = 0;
+    for (int i = 0; i < size; i++) {
+        if (elements[i].busy) {
+            sum.elements[j++] = elements[i];
+        }
+    }
+    for (int i = 0; i < table.size; i++) {
+        if (table.elements[i].busy) {
+            sum.elements[j++] = table.elements[i];
+        }
+    }
+    return sum;
 }
