@@ -4,6 +4,9 @@
 #include <iostream>
 #include "table.h"
 
+#include <stdexcept>
+#include <limits>
+
 template <class T>
 void getValue(T &a);
 
