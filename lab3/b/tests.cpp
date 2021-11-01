@@ -138,9 +138,8 @@ TEST(TableMethods, Reorganize) {
     outTest(table, str, 3);
 }
 
-TEST(TableMethods, OperatorSum)
-{
-    const char* strings[] {"ab", "cd", "ef", "123", "456"};
+TEST(TableMethods, OperatorSum) {
+    const char* strings[] {"ab", "cd", "ef", "123", "456", "789", "qwe", "rty", "98", "10"};
     Table table1;
     for (int i = 0; i < SIZE/2; i++) {
         Element el;
@@ -156,8 +155,8 @@ TEST(TableMethods, OperatorSum)
         table2 += el;
     }
     Table sum = table1 + table2;
-    char str[][255]{"0 ab", "1 cd", "2 ef", "3 123", "4 456", "5 789"};
-    outOpTest(sum, str, 5);
+    char str[][255]{"0 ab", "1 cd", "2 ef", "3 123", "4 456", "5 789", "6 qwe", "7 rty", "8 98", >
+    outOpTest(sum, str, 10);
     table1 += Element();
     ASSERT_ANY_THROW(sum = table1 + table2);
 }
