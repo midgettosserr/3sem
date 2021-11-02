@@ -53,7 +53,7 @@ const Element* Table::find(int key) const {
     return nullptr;
 }
 
-void Table::add(const Element& element) {
+Table& Table::add(const Element& element) {
     bool added = false;
     for (int i = 0; i < SIZE; i++) {
         if (!elements[i].busy) {
@@ -66,6 +66,7 @@ void Table::add(const Element& element) {
     if (!added) {
         throw TableException("table is full");
     }
+    return *this;
 }
 
 const char* Table::getInfo(int key) const {
@@ -78,16 +79,17 @@ const char* Table::getInfo(int key) const {
     }
 }
 
-void Table::erase(int key) {
+Table& Table::erase(int key) {
     for (int i = 0; i < SIZE; i++) {
         if (elements[i].busy && elements[i].key == key) {
             elements[i].busy = 0;
             break;
         }
     }
+    return *this;
 }
 
-void Table::reorganize() {
+Table& Table::reorganize() {
     for (int i = 0; i < SIZE; i++) {
         if (!elements[i].busy) {
             int j = i + 1;
@@ -103,6 +105,7 @@ void Table::reorganize() {
             }
         }
     }
+    return *this;
 }
 
 std::ostream& operator<<(std::ostream& out, const Table& table) {
