@@ -27,10 +27,10 @@ public:
     Table(int keys[], char infos[][INFO_SIZE], int size);
     std::ostream& print(std::ostream& out) const;
     const Element* find(int key) const;
-    void add(const Element& element);
+    Table& add(const Element& element);
     const char* getInfo(int key) const;
-    void erase(int key);
-    void reorganize();
+    Table& erase(int key);
+    Table& reorganize();
     
     friend std::ostream& operator<<(std::ostream& out, const Table& table);
     Table& operator+=(const Element& element);
