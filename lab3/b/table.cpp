@@ -126,23 +126,23 @@ const char* Table::operator[](int key) {
     return getInfo(key);
 }
 
-Table Table::operator+(const Table& table) const {
+Table operator+(const Table& table1, const Table& table2) {
     Table sum;
     int j = 0;
     for (int i = 0; i < SIZE; i++) {
-        if (elements[i].busy) {
+        if (table1.elements[i].busy) {
             if (j >= SIZE) {
                 throw TableException("sum overflow");
             }
-            sum.elements[j++] = elements[i];
+            sum.elements[j++] = table1.elements[i];
         }
     }
     for (int i = 0; i < SIZE; i++) {
-        if (table.elements[i].busy) {
+        if (table2.elements[i].busy) {
             if (j >= SIZE) {
                 throw TableException("sum overflow");
             }
-            sum.elements[j++] = table.elements[i];
+            sum.elements[j++] = table2.elements[i];
         }
     }
     return sum;
