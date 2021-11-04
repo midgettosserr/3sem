@@ -59,6 +59,29 @@ Element& Element::operator=(const Element& element) {
     return *this;
 }
 
+Element::Element(Element&& element) {
+    info = element.info;
+    busy = element.busy;
+    key = element.key;
+    element.info = new char[1];
+    element.info[0] = '\0';
+    element.busy = 0;
+}
+
+Element& Element::operator=(Element&& element) {
+    if (this == &element) {
+        return *this;
+    }
+    delete [] info;
+    info = element.info;
+    busy = element.busy;
+    key = element.key;
+    element.info = new char[1];
+    element.info[0] = '\0';
+    element.busy = 0;
+    return *this;
+}
+
 Element::~Element() {
     delete [] info;
 }
@@ -183,6 +206,13 @@ Table::Table(const Table& table) {
     }
 }
 
+Table::Table(Table &&table) {
+    size = table.size;
+    elements = table.elements;
+    table.size = 0;
+    table.elements = nullptr;
+}
+
 Table& Table::operator=(const Table& table) {
     if (this == &table) {
         return *this;
@@ -196,23 +226,35 @@ Table& Table::operator=(const Table& table) {
     return *this;
 }
 
+Table& Table::operator=(Table &&table) {
+    if (this == &table) {
+        return *this;
+    }
+    delete [] elements;
+    size = table.size;
+    elements = table.elements;
+    table.size = 0;
+    table.elements = nullptr;
+    return *this;
+}
+
 Table::~Table() {
     delete [] elements;
 }
 
-Table Table::operator+(const Table& table) const {
+Table operator+(const Table& table1, const Table& table2) {
     Table sum;
-    sum.size = size + table.size;
+    sum.size = table1.size + table2.size;
     sum.elements = new Element[sum.size];
     int j = 0;
-    for (int i = 0; i < size; i++) {
-        if (elements[i].busy) {
-            sum.elements[j++] = elements[i];
+    for (int i = 0; i < table1.size; i++) {
+        if (table1.elements[i].busy) {
+            sum.elements[j++] = table1.elements[i];
         }
     }
-    for (int i = 0; i < table.size; i++) {
-        if (table.elements[i].busy) {
-            sum.elements[j++] = table.elements[i];
+    for (int i = 0; i < table2.size; i++) {
+        if (table2.elements[i].busy) {
+            sum.elements[j++] = table2.elements[i];
         }
     }
     return sum;
