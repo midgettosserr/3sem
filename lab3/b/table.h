@@ -36,7 +36,7 @@ public:
     Table& operator+=(const Element& element);
     Table& operator-=(int key);
     const char* operator[](int key);
-    Table operator+(const Table& table) const;
+    friend Table operator+(const Table& table1, const Table& table2);
 };
 
 #endif
