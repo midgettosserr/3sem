@@ -155,7 +155,7 @@ TEST(TableMethods, OperatorSum) {
         table2 += el;
     }
     Table sum = table1 + table2;
-    char str[][255]{"0 ab", "1 cd", "2 ef", "3 123", "4 456", "5 789", "6 qwe", "7 rty", "8 98", >
+    char str[][255]{"0 ab", "1 cd", "2 ef", "3 123", "4 456", "5 789", "6 qwe", "7 rty", "8 98", "9 10"};
     outOpTest(sum, str, 10);
     table1 += Element();
     ASSERT_ANY_THROW(sum = table1 + table2);
