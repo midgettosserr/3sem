@@ -17,7 +17,15 @@ bool encode(string filenameIn, string filenameOut, const Alphabet& a, int n){
         while (getline(fileIn, str)){
                 char *cstr = new char[str.size() + 1];
                 strcpy(cstr, str.c_str());
-                a.Encoding(n, cstr);
+                try {
+                        a.Encoding(n, cstr);
+                }
+                catch (exception e) {
+                        delete [] cstr;
+                        fileIn.close();
+                        fileOut.close();
+                        throw;
+                }
                 fileOut << cstr << endl;
                 delete [] cstr;
         }
