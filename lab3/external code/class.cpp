@@ -9,7 +9,7 @@ Alphabet::Alphabet(){//empty
 }
 
 Alphabet::Alphabet(size_t size){ //Alphabet by size
-    this->size = size;
+    /*this->size = size;
     this->alph = new char[size];
     if(size < 94){
         for(int i = ' '; i <= 32 + (char)size; i++){
@@ -21,7 +21,15 @@ Alphabet::Alphabet(size_t size){ //Alphabet by size
         for(int i = ' '; i <= 32 + (char)size; i++){
             this->alph[i - ' ']=i;
         }
-    }
+    }*/
+        if (size > 95) {
+                size = 95;
+        }
+        this->size = size;
+        this->alph = new char[size];
+        for (int i = ' '; i < 32 + (char)size; i++){
+                this->alph[i - ' '] = i;
+        }
 
 }
 
