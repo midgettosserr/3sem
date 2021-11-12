@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
-#include "table.h"
+#include "input.cpp"
+#include "table.cpp"
 #include <fstream>
 #include <cstring>
 
@@ -51,7 +52,6 @@ TEST(ElementConstructor, InitConstructor) {
     ASSERT_EQ(el.busy, 1);
     ASSERT_EQ(el.key, 123);
     ASSERT_STREQ(el.info, "abcd");
-
 }
 
 TEST(ElementConstructor, CopyConstructor) {
@@ -154,9 +154,7 @@ TEST(TableMethods, ChangeSearch) {
     const char* strings[] {"ab", "cd", "ef", "123", "456", "789", "qwe", "rty", "98", "10"};
     Table table;
     for (int i = 0; i < 10; i++) {
-        Element el;
-        el.key = i;
-        strcpy(el.info, strings[i]);
+        Element el(0, i, strings[i]);
         table.add(el);
     }
     ASSERT_ANY_THROW(table.getInfo(11));
@@ -180,28 +178,23 @@ TEST(TableMethods, Reorganize) {
     Table table(keys, infos, 3);
     table.erase(2);
     table.reorganize();
-    Element el;
-    el.key = 4;
-    strcpy(el.info, "qwerty");
+    Element el(0, 4, "qwerty");
     table.add(el);
 
     char str[][255]{"1 ab", "3 ef", "4 qwerty"};
     outTest(table, str, 3);
 }
+
 TEST(TableMethods, OperatorSum) {
     const char* strings[] {"ab", "cd", "ef", "123", "456", "789", "qwe", "rty", "98", "10"};
     Table table1;
     for (int i = 0; i < 4; i++) {
-        Element el;
-        el.key = i;
-        strcpy(el.info, strings[i]);
+        Element el(0, i, strings[i]);
         table1 += el;
     }
     Table table2;
     for (int i = 4; i < 10; i++) {
-        Element el;
-        el.key = i;
-        strcpy(el.info, strings[i]);
+        Element el(0, i, strings[i]);
         table2 += el;
     }
     Table sum = table1 + table2;
@@ -209,7 +202,8 @@ TEST(TableMethods, OperatorSum) {
     outOpTest(sum, str, 10);
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
