@@ -9,12 +9,11 @@ class School {
 private:
 	std::string name;	//название школы
 	std::vector<Skill> skills;	//список умений
-public:
-	School();
-	School(std::string name);
+public:;
+	School(std::string name = "") : name(name) {}
 
-	std::string getName() const;
-	void setName(std::string name);
+	std::string getName() const {return name;}
+	void setName(std::string name) {this->name = name;}
 
 	void addSkill(const Skill &skill);
 };

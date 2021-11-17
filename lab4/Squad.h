@@ -16,17 +16,16 @@ protected:
 	int count;
 	int experience;	//опыт за уничтожение отряда
 public:
-	Squad();
-	Squad(std::string, const School&, int, int, int, int, int, int);
+	Squad(std::string creatureName = "", const School& school = School(), int initiative = 0, int speed = 0, int damage = 0, int protection = 0, int count = 0, int experience = 0);
 
-	virtual std::string getCreatureName();
-	virtual School getSchool() const;
-	virtual int getInitiative() const;
-	virtual int getSpeed() const;
-	virtual int getDamage() const;
-	virtual int getProtection() const;
-	virtual int getCount() const;
-	virtual int getExperience() const;
+	virtual std::string getCreatureName() const {return creatureName;}
+	virtual School getSchool() const {return school;}
+	virtual int getInitiative() const {return initiative;}
+	virtual int getSpeed() const {return speed;}
+	virtual int getDamage() const {return damage;}
+	virtual int getProtection() const {return protection;}
+	virtual int getCount() const {return count;}
+	virtual int getExperience() const {return experience;}
 
 	virtual void setCreatureName(std::string name);
 	virtual void setSchool(const School &school);

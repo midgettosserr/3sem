@@ -16,8 +16,25 @@ private:
 	int experience;
 	//значение владения каждой школой
 public:
-	Summoner();
-	Summoner(std::string, int, int, int, int, int, double, int);
+	Summoner(std::string name = "", int initiative = 0, int maxHealth = 0, int currentHealth = 0, int maxEnergy = 0, int currentEnergy = 0, double accumKoef = 0, int experience = 0);
+
+	std::string getName() const {return name;}
+	int getInitiative() const {return initiative;}
+	int getMaxHealth() const {return maxHealth;}
+	int getCurrentHealth() const {return currentHealth;}
+	int getMaxEnergy() const {return maxEnergy;}
+	int getCurrentEnergy() const {return currentEnergy;}
+	int getAccumKoef() const {return accumKoef;}
+	int getExperience() const {return experience;}
+
+	void setName(std::string name);
+	void setInitiative(int initiative);
+	void setMaxHealth(int maxHealth);
+	void setCurrentHealth(int currentHealth);
+	void setMaxEnergy(int maxEnergy);
+	void setCurrentEnergy(int currentEnergy);
+	void setAccumKoef(double accumKoef);
+	void setExperience(int experience);
 
 	void accumulateEnergy();
 	void getExperience();

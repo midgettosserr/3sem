@@ -12,14 +12,13 @@ private:
 	int energy;
 	double k;		//коэффициент численности от знания школы
 public:
-	Skill();
-	Skill(std::string name, std::string creature, int minKnowledge, int energy, double k);
+	Skill(std::string name = "", std::string creature = "", int minKnowledge = 0, int energy = 0, double k = 0);
 
-	std::string geName() const;
-	std::string getCreature() const;
-	int getMinKnowledge() const;
-	int getEnergy() const;
-	double getKoefficient() const;
+	std::string geName() const {return name;}
+	std::string getCreature() const {return creature;}
+	int getMinKnowledge() const {return minKnowledge;}
+	int getEnergy() const {return energy;}
+	double getKoefficient() const {return k;}
 
 	void setName(std::string name);
 	void setCreature(std::string creature);
