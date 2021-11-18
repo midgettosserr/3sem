@@ -10,13 +10,14 @@ private:
 	int rows, cols;
 public:
 	Level(int, int);
+	~Level();
 
 	void setSize(int rows, int cols);
-	int getRows() const;
-	int getCols() const;
+	int getRows() const {return rows;}
+	int getCols() const {return cols;}
 
 	void getCell(int x, int y) const;
-	void setCell(int val, int x, int y);
+	void setCell(CellTypes val, int x, int y);
 
 	void setSquad(int x, int y, Squad *squad);
 };

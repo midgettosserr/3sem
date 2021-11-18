@@ -3,19 +3,20 @@
 
 #include "Squad.h"
 
+enum CellTypes {CellEmpty, CellWall, CellNothing, CellSummoner, CellSquad, CellEnd};
+
 //класс клетка поля
 class Cell {
 private:
-	int type;
+	CellTypes type;
 	Squad *squad;
 public:
-	Cell();
-	Cell(int type, Squad *squad = nullptr);
+	Cell(CellTypes type = CellEmpty, Squad *squad = nullptr);
 
-	int getType() const;
-	Squad *getsquad() const;
+	CellTypes getType() const {return type;}
+	Squad *getsquad() const {return squad;}
 
-	void setType(int type);
+	void setType(CellTypes type, Squad *squad = nullptr);
 	void setSquad(Squad *squad);
 };
 

@@ -19,7 +19,7 @@ public:
 	Squad(std::string creatureName = "", const School& school = School(), int initiative = 0, int speed = 0, int damage = 0, int protection = 0, int count = 0, int experience = 0);
 
 	virtual std::string getCreatureName() const {return creatureName;}
-	virtual School getSchool() const {return school;}
+	virtual School &getSchool() {return school;}
 	virtual int getInitiative() const {return initiative;}
 	virtual int getSpeed() const {return speed;}
 	virtual int getDamage() const {return damage;}
@@ -36,7 +36,7 @@ public:
 	virtual void setCount(int count);
 	virtual void setExperience(int experience);
 
-	virtual void makeDamageTo(int damage) const = 0;	//нанести урон
+	virtual void makeDamageTo(int damage) = 0;	//нанести урон
 	virtual void getDamageFrom(int damage) const = 0;	//получить урон, наносимый отрядом
 };
 
