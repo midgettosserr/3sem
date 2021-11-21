@@ -2,6 +2,7 @@
 #define SUMMONER_H
 
 #include <string>
+#include <map>
 
 //класс призыватель
 class Summoner {
@@ -14,9 +15,9 @@ private:
 	int currentEnergy;
 	double accumKoef;	//коэффициент аккумуляции
 	int experience;
-	//значение владения каждой школой
+	std::map<std::string, int> schoolKnowledge;//значение владения каждой школой
 public:
-	Summoner(std::string name = "", int initiative = 0, int maxHealth = 0, int currentHealth = 0, int maxEnergy = 0, int currentEnergy = 0, double accumKoef = 0, int experience = 0);
+	Summoner(std::string name = "", int initiative = 0, int maxHealth = 0, int currentHealth = 0, int maxEnergy = 0, int currentEnergy = 0, double accumKoef = 0, int experience = 0, const std::map<std::string, int> &schoolKnowledge = std::map<std::string, int() );
 
 	std::string getName() const {return name;}
 	int getInitiative() const {return initiative;}
@@ -26,6 +27,7 @@ public:
 	int getCurrentEnergy() const {return currentEnergy;}
 	int getAccumKoef() const {return accumKoef;}
 	int getExperience() const {return experience;}
+	int getSchoolKnowledge(std::string school) const;
 
 	void setName(std::string name);
 	void setInitiative(int initiative);
@@ -35,6 +37,7 @@ public:
 	void setCurrentEnergy(int currentEnergy);
 	void setAccumKoef(double accumKoef);
 	void setExperience(int experience);
+	void setSchoolKnowledge(std::string school, int knowledge);
 
 	void accumulateEnergy();
 	void getExperience();
