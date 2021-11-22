@@ -8,7 +8,7 @@ class ResurrectedSquad: public AmoralSquad {
 private:
     AmoralSquad *squad;
 public:
-    ResurrectedSquad(std::string creatureName = "", const School &school = School(), int initiative = 0, int speed = 0, int damage = 0, int protection = 0, int count = 0, int experience = 0);
+    ResurrectedSquad(std::string creatureName = "", const School &school = School(), int initiative = 0, int speed = 0, int damage = 0, int protection = 0, int count = 0, int experience = 0, bool amoral = false);
     ~ResurrectedSquad() {delete squad;}
 
     virtual std::string getCreatureName() const override {return squad->getCreatureName();}
