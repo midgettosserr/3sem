@@ -40,7 +40,7 @@ public:
 	void setSchoolKnowledge(std::string school, int knowledge);
 
 	void accumulateEnergy();
-	void getExperience();
+	void gainExperience();
 	void improveSchool(std::string school);
 	void makeDamage(int damage);
 };
