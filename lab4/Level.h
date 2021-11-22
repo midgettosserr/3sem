@@ -2,7 +2,7 @@
 #define LEVEL_H
 
 #include "Cell.h"
-#include "Squad.h"
+#include "AmoralSquad.h"
 
 class Level {
 private:
@@ -19,7 +19,7 @@ public:
 	void getCell(int x, int y) const;
 	void setCell(CellTypes val, int x, int y);
 
-	void setSquad(int x, int y, Squad *squad);
+	void setSquad(int x, int y, AmoralSquad *squad);
 };
 
 #endif

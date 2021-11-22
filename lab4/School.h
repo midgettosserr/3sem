@@ -16,6 +16,13 @@ public:;
 	void setName(std::string name) {this->name = name;}
 
 	void addSkill(const Skill &skill);
+
+	//получение существа по умению
+	std::string getCreature(std::string skill) const;
+	//изменение существа по умению
+	void setCreature(std::string skill, std::string creature);
+	//кол-во умений в школе
+	size_t size() const {return skills.size();}
 };
 
 #endif

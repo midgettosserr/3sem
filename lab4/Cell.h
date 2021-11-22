@@ -1,7 +1,7 @@
 #ifndef CELL_H
 #define CELL_H
 
-#include "Squad.h"
+#include "AmoralSquad.h"
 
 enum CellTypes {CellEmpty, CellWall, CellNothing, CellSummoner, CellSquad, CellEnd};
 
@@ -9,15 +9,15 @@ enum CellTypes {CellEmpty, CellWall, CellNothing, CellSummoner, CellSquad, CellE
 class Cell {
 private:
 	CellTypes type;
-	Squad *squad;
+	AmoralSquad *squad;
 public:
-	Cell(CellTypes type = CellEmpty, Squad *squad = nullptr);
+	Cell(CellTypes type = CellEmpty, AmoralSquad *squad = nullptr);
 
 	CellTypes getType() const {return type;}
-	Squad *getsquad() const {return squad;}
+	AmoralSquad *getsquad() const {return squad;}
 
-	void setType(CellTypes type, Squad *squad = nullptr);
-	void setSquad(Squad *squad);
+	void setType(CellTypes type, AmoralSquad *squad = nullptr);
+	void setSquad(AmoralSquad *squad);
 };
 
 #endif

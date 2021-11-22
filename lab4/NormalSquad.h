@@ -1,9 +1,9 @@
 #ifndef NORMAL_SQUAD_H
 #define NORMAL_SQUAD_H
 
-#include "Squad.h"
+#include "AmoralSquad.h"
 
-class NormalSquad: public Squad {
+class NormalSquad: public AmoralSquad {
 private:
 	int moral;
 public:
