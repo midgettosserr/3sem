@@ -78,4 +78,112 @@ public:
 	size_t max_size() const { return max_size; }
 };
 
+template <class T>
+vector<T>::vector() {
+	max_size_ = size_ = 0;
+	data_ = nullptr;
 }
+
+template <class T>
+vector<T>::vector(const vector<T> &other) {
+	max_size_ = other.max_size_;
+	size_ = other.size;
+	data_ = new T[max_size_];
+	for (int i = 0; i < size_; i++) {
+		data_[i] = other[i];
+	}
+}
+
+template <class T>
+vector<T>::~vector() {
+	delete [] data_;
+}
+
+template <class T>
+vector<T> &vector<T>::operator=(const vector &other) {
+	if (this != &other) {
+		delete [] data_;
+		max_size_ = other.max_size_;
+		size_ = other.size_;
+		data_ = new T[max_size_];
+		for (int i = 0; i < size_; i++) {
+			data_[i] = other.data_[i];
+		}
+	}
+	return *this;
+}
+
+template <class T>
+typename vector<T>::iterator vector<T>::begin() {
+	iterator it;
+	it.ptr = data_;
+	return it;
+}
+
+template <class T>
+typename vector<T>::iterator vector<T>::end() {
+	iterator it;
+	it.ptr = data_ + size_;
+	return it;
+}
+
+template <class T>
+typename vector<T>::const_iterator vector<T>::cbegin() const {
+	const_itaretor it;
+	it.ptr = data_;
+	return it;
+}
+
+template <class T>
+typename vector<T>::const_iterator vector<T>::cend() const {
+	const_iterator it;
+	it.ptr = data_ + size_;
+	return it;
+}
+
+template <class T>
+void vector<T>::push_back(const T &value) {
+	if (size_ == max_size_) {
+		resize(max_size_*2 + 1);
+	}
+	data_[size_++] = value;
+}
+
+template <class T>
+typename vector <T>::iterator vector<T>::erase(iterator it) {
+	for (T *ptr = it.ptr; ptr < (data_ + size_); ptr++) {
+		*ptr = *(ptr + 1);
+	}
+	size_--;
+	return true;
+}
+
+template <class T>
+void vector<T>::resize(size_t size) {
+	if (size == max_size_) {
+		return;
+	}
+	T *data = new T[size];
+	size_ = size_ > size ? size : size_;
+	for (size_t i; i < size_; i++) {
+		data[i] = data_[i];
+	}
+	delete [] data_;
+	data_ = data;
+	max_size_ = size;
+}
+
+template <class T>
+T &vector<T>::operator[](int i) {
+	return data_[i];
+}
+
+
+template <class T>
+const T &vector<T>::operator[](int i) const {
+	return data_[i];
+}
+
+}
+
+#endif
