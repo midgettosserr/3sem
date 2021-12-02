@@ -156,7 +156,7 @@ typename vector <T>::iterator vector<T>::erase(iterator it) {
 		*ptr = *(ptr + 1);
 	}
 	size_--;
-	return true;
+	return it;
 }
 
 template <class T>
