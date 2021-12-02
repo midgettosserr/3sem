@@ -12,10 +12,11 @@ private:
 	T *data_;
 public:
 	class iterator {
+	private:
 		T *ptr;
 	public:
 		iterator() : ptr(nullptr) {}
-		itaretor(const iterator &it) : ptr(it.ptr) {}
+		iteretor(const iterator &it) : ptr(it.ptr) {}
 		iterator &operator=(const iterator &it) { ptr = it.ptr; }
 
 		iterator &operator++() {ptr++; return *this;}
@@ -28,7 +29,7 @@ public:
 		T *operator->() const { return ptr; }
 
 		bool operator==(iterator other) const { return ptr == other.ptr; }
-		bool operator!=(itaretor other) const { return ptr != other.ptr; }
+		bool operator!=(iterator other) const { return ptr != other.ptr; }
 
 		friend class vector;
 	};
@@ -51,7 +52,7 @@ public:
 		const T *operator->() const { return ptr; }
 
 		bool operator==(const_iterator other) const { return ptr == other.ptr; }
-		bool operator!=(const_itaretor other) const { return ptr != other.ptr; }
+		bool operator!=(const_iterator other) const { return ptr != other.ptr; }
 
 		friend class vector;
 	};
@@ -129,7 +130,7 @@ typename vector<T>::iterator vector<T>::end() {
 
 template <class T>
 typename vector<T>::const_iterator vector<T>::cbegin() const {
-	const_itaretor it;
+	const_iteretor it;
 	it.ptr = data_;
 	return it;
 }
