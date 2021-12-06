@@ -3,7 +3,7 @@
 
 #include "AmoralSquad.h"
 
-class NormalSquad: public AmoralSquad {
+class NormalSquad: public virtual AmoralSquad {
 private:
 	int moral;
 public:
@@ -22,3 +22,5 @@ public:
 	virtual int getDamage() const override;
 	virtual int getExperience() const override;
 };
+
+#endif

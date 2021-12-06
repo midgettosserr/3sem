@@ -16,10 +16,11 @@ public:
 	int getRows() const {return rows;}
 	int getCols() const {return cols;}
 
-	void getCell(int x, int y) const;
+	CellTypes getCell(int x, int y) const;
 	void setCell(CellTypes val, int x, int y);
 
-	void setSquad(int x, int y, AmoralSquad *squad);
+    void setSquad(int x, int y, AmoralSquad* squad);
+    AmoralSquad *getSquad(int x, int y) const;
 };
 
 #endif

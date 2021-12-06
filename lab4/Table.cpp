@@ -1,6 +1,8 @@
 #include "Table.h"
 #include <algorithm>
 
+#include <stdexcept>
+
 void Table::addSchool(std::string school) {
 	schools.push_back(School(school));
 }
@@ -16,7 +18,7 @@ void Table::addSkill(std::string school, const Skill &skill) {
 }
 
 std::string Table::getCreature(std::string school, std::string skill) const {
-	std::vector<School>::iterator it = std::find(schools.begin(), schools.end(), school);
+	std::vector<School>::const_iterator it = std::find(schools.begin(), schools.end(), school);
 	if (it != schools.end()) {
 		return it->getCreature(skill);
 	}
@@ -37,4 +39,14 @@ void Table::setCreature(std::string school, std::string skill, std::string creat
 
 size_t Table::size() const {
 	return schools.size();
+}
+
+size_t Table::schoolSize(std::string school) const {
+    std::vector<School>::const_iterator it = std::find(schools.begin(), schools.end(), school);
+    if (it != schools.end()) {
+        return it->size();
+    }
+    else {
+        throw std::out_of_range("no such school");
+    }
 }

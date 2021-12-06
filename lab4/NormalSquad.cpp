@@ -47,5 +47,5 @@ int NormalSquad::getDamage() const {
 }
 
 int NormalSquad::getExperience() const {
-	return experiecne + (double)moral/100. * experience;
+	return experience + (double)moral/100. * experience;
 }

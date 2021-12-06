@@ -16,7 +16,7 @@ public:
 		T *ptr;
 	public:
 		iterator() : ptr(nullptr) {}
-		iteretor(const iterator &it) : ptr(it.ptr) {}
+		iterator(const iterator &it) : ptr(it.ptr) {}
 		iterator &operator=(const iterator &it) { ptr = it.ptr; }
 
 		iterator &operator++() {ptr++; return *this;}
@@ -76,7 +76,7 @@ public:
 	const T &operator[](int i) const;
 
 	size_t size() const { return size_; }
-	size_t max_size() const { return max_size; }
+	size_t max_size() const { return max_size_; }
 };
 
 template <class T>
@@ -130,7 +130,7 @@ typename vector<T>::iterator vector<T>::end() {
 
 template <class T>
 typename vector<T>::const_iterator vector<T>::cbegin() const {
-	const_iteretor it;
+	const_iterator it;
 	it.ptr = data_;
 	return it;
 }

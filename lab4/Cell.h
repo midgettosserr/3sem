@@ -14,7 +14,7 @@ public:
 	Cell(CellTypes type = CellEmpty, AmoralSquad *squad = nullptr);
 
 	CellTypes getType() const {return type;}
-	AmoralSquad *getsquad() const {return squad;}
+	AmoralSquad *getSquad() const {return squad;}
 
 	void setType(CellTypes type, AmoralSquad *squad = nullptr);
 	void setSquad(AmoralSquad *squad);

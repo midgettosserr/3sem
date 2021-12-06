@@ -9,7 +9,7 @@ Summoner::Summoner(std::string name, int initiative, int maxHealth, int currentH
     
 }
 
-int Summoner::setSchoolKnowledge(std::string school) const {
+int Summoner::getSchoolKnowledge(std::string school) const {
     return schoolKnowledge.at(school);
 }
 
@@ -26,28 +26,28 @@ void Summoner::setInitiative(int initiative) {
 
 void Summoner::setMaxHealth(int maxHealth) {
     if (maxHealth < 0) {
-        throw std::invalid_argument("maxHealth < 0");
+        throw std::invalid_argument("max health < 0");
     }
     this->maxHealth = maxHealth;
 }
 
 void Summoner::setCurrentHealth(int currentHealth) {
     if (currentHealth < 0) {
-        throw std::invalid_argument("currentHealth < 0");
+        throw std::invalid_argument("current health < 0");
     }
     this->currentHealth = currentHealth;
 }
 
 void Summoner::setMaxEnergy(int maxEnergy) {
     if (maxEnergy < 0) {
-        throw std::invalid_argument("maxEnergy < 0");
+        throw std::invalid_argument("max energy < 0");
     }
     this->maxEnergy = maxEnergy;
 }
 
 void Summoner::setCurrentEnergy(int currentEnergy) {
     if (currentEnergy < 0) {
-        throw std::invalid_argument("currentEnergy < 0");
+        throw std::invalid_argument("current energy < 0");
     }
     this->currentEnergy = currentEnergy;
 }
@@ -76,7 +76,7 @@ void Summoner::setSchoolKnowledge(std::string school, int knowledge) {
 }
 
 void Summoner::accumulateEnergy() {
-    currentEnergy++;
+    currentEnergy = maxEnergy;
 }
 
 void Summoner::gainExperience() {
@@ -84,7 +84,7 @@ void Summoner::gainExperience() {
 }
 
 void Summoner::improveSchool(std::string school) {
-    if (schoolKnowledge.find(school) != schoolKnowledge,end()) {
+    if (schoolKnowledge.find(school) != schoolKnowledge.end()) {
         schoolKnowledge[school]++;
     }
     else {

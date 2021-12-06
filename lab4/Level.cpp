@@ -1,6 +1,6 @@
 #include "Level.h"
 
-Level::Level(int rows, int cols) {
+Level::Level(int rows, int cols): rows(rows), cols(cols) {
 	if (rows < 1 || cols < 1) {
 		throw std::invalid_argument("invalid size");
 	}
@@ -39,7 +39,7 @@ void Level::setSize(int rows, int cols) {
 	this->cols = cols;
 }
 
-void Level::getCell(int x, int y) const {
+CellTypes Level::getCell(int x, int y) const {
 	if (x < 0 || y < 0 || x >= rows || y >= cols) {
 		throw std::out_of_range("invalid coordinates");
 	}
@@ -58,4 +58,11 @@ void Level::setSquad(int x, int y, AmoralSquad *squad) {
 		throw std::out_of_range("invalid coordinates");
 	}
 	field[x][y].setSquad(squad);
+}
+
+AmoralSquad *Level::getSquad(int x, int y) const {
+    if (x < 0 || y < 0 || x >= rows || y >= cols) {
+        throw std::out_of_range("invalid coordinates");
+    }
+    return field[x][y].getSquad();
 }

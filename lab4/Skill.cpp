@@ -1,5 +1,7 @@
 #include "Skill.h"
 
+#include <stdexcept>
+
 Skill::Skill(std::string name, std::string creature, int minKnowledge, int energy, double k) : name(name), creature(creature), minKnowledge(minKnowledge), energy(energy), k(k) {
 
 }

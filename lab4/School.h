@@ -17,6 +17,8 @@ public:;
 
 	void addSkill(const Skill &skill);
 
+    bool operator==(std::string name) const {return this->name == name;}
+
 	//получение существа по умению
 	std::string getCreature(std::string skill) const;
 	//изменение существа по умению

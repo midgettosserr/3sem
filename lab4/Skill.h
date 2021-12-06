@@ -14,7 +14,7 @@ private:
 public:
 	Skill(std::string name = "", std::string creature = "", int minKnowledge = 0, int energy = 0, double k = 0);
 
-	std::string geName() const {return name;}
+	std::string getName() const {return name;}
 	std::string getCreature() const {return creature;}
 	int getMinKnowledge() const {return minKnowledge;}
 	int getEnergy() const {return energy;}
@@ -25,6 +25,9 @@ public:
 	void setMinKnowledge(int minKnowledge);
 	void setEnergy(int energy);
 	void setKoefficient(double k);
+
+    bool operator==(std::string name) const {return this->name == name;}
+
 };
 
 #endif
