@@ -449,7 +449,7 @@ TEST(SummonerClass, Constructor) {
     ASSERT_ANY_THROW(summoner2.getSchoolKnowledge(""));
 }
 
-/*TEST(SummonerClass, Methods) {
+TEST(SummonerClass, Methods) {
     Summoner summoner;
     summoner.setName("abc");
     summoner.setInitiative(1);
@@ -481,8 +481,7 @@ TEST(SummonerClass, Constructor) {
     ASSERT_GT(summoner.getExperience(), 7);
     summoner.makeDamage(5);
     ASSERT_EQ(summoner.getCurrentHealth(), 0);
-    
-}*/
+}
 
 int main(int argc, char* argv[]) {
     ::testing::InitGoogleTest(&argc, argv);
