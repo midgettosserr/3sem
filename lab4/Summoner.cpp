@@ -1,8 +1,8 @@
 #include "Summoner.h"
 
 Summoner::Summoner(std::string name, int initiative, int maxHealth, int currentHealth,
-                int maxEnergy, int currentEnergy, double accumKoef, int experience,
-                const std::map<std::string, int> &schoolKnowledge) :
+                    int maxEnergy, int currentEnergy, double accumKoef, int experience,
+                    const std::map<std::string, int>& schoolKnowledge) :
         name(name), initiative(initiative), maxHealth(maxHealth), currentHealth(currentHealth),
         maxEnergy(maxEnergy), currentEnergy(currentEnergy), accumKoef(accumKoef), experience(experience),
         schoolKnowledge(schoolKnowledge) {
@@ -67,12 +67,7 @@ void Summoner::setExperience(int experience) {
 }
 
 void Summoner::setSchoolKnowledge(std::string school, int knowledge) {
-    if (schoolKnowledge.find(school) != schoolKnowledge.end()) {
-        schoolKnowledge[school] = knowledge;
-    }
-    else {
-        throw std::out_of_range("no such school");
-    }
+    schoolKnowledge[school] = knowledge;
 }
 
 void Summoner::accumulateEnergy() {
