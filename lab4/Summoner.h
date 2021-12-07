@@ -25,7 +25,7 @@ public:
 	int getCurrentHealth() const {return currentHealth;}
 	int getMaxEnergy() const {return maxEnergy;}
 	int getCurrentEnergy() const {return currentEnergy;}
-	int getAccumKoef() const {return accumKoef;}
+	double getAccumKoef() const {return accumKoef;}
 	int getExperience() const {return experience;}
 	int getSchoolKnowledge(std::string school) const;
 
