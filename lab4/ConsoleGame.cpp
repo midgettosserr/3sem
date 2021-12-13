@@ -1,8 +1,8 @@
 #include "ConsoleGame.h"
 #include <vector>
 #include <iostream>
-#include <fstream>
-#include <sstream>
+//#include <fstream>
+//#include <sstream>
 
 template<class T>
 void input(T &data) {
@@ -19,7 +19,7 @@ void input(std::string &data) {
     getline(std::cin, data);
 }
 
-bool quit;
+//bool quit;
 
 void ConsoleGame::printMap() const {
     char userSquad = 'a';
@@ -77,6 +77,8 @@ bool ConsoleGame::mainMenu() {
     std::cout << "s - выйти и сохранить игру в файл" << std::endl;
     char option;
     input(option);
+    int i, j, i1, j1;
+    AmoralSquad *squad = findSquadToMove(i, j);
     if ((option == 'g' || option == 'a' || option == 'h')) {
         if (!squad) {
             std::cout << "Нет ни одного отряда" << std::endl;
@@ -113,11 +115,56 @@ bool ConsoleGame::mainMenu() {
             std::cout << "Отряд успешно перемещен" << std::endl;
             return true;
         case 'a':
+            std::cout << "Текущие координаты отряда: " << i << " " << j << std::endl;
+            std::cout << "Введите координаты атакуемой точки: ";
+            input(i1);
+            input(j1);
+            if (i1 < 0 || j1 < 0 || i1 >= level.getRows() || j1 >= level.getCols()) {
+                std::cout << "Некорректные координаты!" << std::endl;
+                return false;
+            }
+            if (squad->getSpeed() < abs(i-i1) + abs(j-j1)){
+                std::cout << "Недостаточная скорость!" << std::endl;
+                return false;
+            }
+            if (level.getCell(i1, j1) != CellSquad || level.getSquad(i1, j1)->getSummoner() == currentPlayer) {
+                std::cout << "В указанной точке нет вражеского отряда!" << std::endl;
+                return false;
+            }
+            std::cout << "Численность атакованного отряда до атаки: " << level.getSquad(i1, j1)->getCount() <<std::endl;
+            level.getSquad(i1, j1) ->makeDamageTo(squad->getDamageFrom());
+            if (NormalSquad *s = dynamic_cast<NormalSquad*>(squad)) {
+                s->increaseMoral;
+            }
+            std::cout << "Численность атакованного отряда после атаки: " << level.getSquad(i1, j1)->getCount() << std::endl;
+            squad->decreaseInitiative();
+            return true;
         case 'h':
+            if (AmoralResurrectedSquad *s = dynamic_cast<AmoralResurrectedSquad>(squad)) {
+                std::cout << "Численность отряда до попытки воскрешения: " << s->getCount() << std::endl;
+                s->resurrect();
+                s->decreaseInitiative();
+                std::cout << "Численность отряда после попытки воскрешения: " << s->getCount() << std::endl;
+                return true;
+            }
+            else {
+                std::cout << "Отряд не является воскрешаемым" << std::endl;
+                return false;
+            }
         case 'r':
+            std::cout << "Энергия призываетля была: " << currentPlayer->getCurrentEnergy() << std::endl;
+            currentPlayer->accumulateEnergy();
+            currentPlayer->decreaseInitiative();
+            std::cout << "Энергия призывателя стала: " << currentPlayer->getCurrentEnergy() << std::endl;
+            return true;
         case 'c':
+            return summonMenu();
         case 'o':
-        case 's':
+            return schoolMenu();
+        //case 's':
+            //return false;
+        default:
+            std::cout << "Неверный пункт меню, повторите выбор" << std::endl;
             return false;
     }
 }
@@ -146,13 +193,24 @@ AmoralSquad *ConsoleGame::findSquadToMove(int &x, int &y) {
     return squad;
 }
 
-bool findEmptyCell(int &x, int &y);
+bool ConsoleGame::findEmptyCell(int &x, int &y) const {
+    for (int i = 0; i < level.getCols(); i++) {
+        for (int j = 0; j < getRows(); j++) {
+            if (level.getCell(i, j) == CellEmpty) {
+                x = i;
+                y = j;
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
-bool readSkillsFromFile();
+/*bool readSkillsFromFile();
 bool readMapFromFile();
 
 bool saveGame(std::string filename);
-bool loadGame(std::string filename);
+bool loadGame(std::string filename);*/
 
 
 ConsoleGame::ConsoleGame() : level(10, 10), player1("Первый призыватель", 100, 100, 100, 100, 100, 0.5, 100), player2("Второй призыватель", 100, 100, 100, 100, 100, 0.5, 100) {
@@ -197,7 +255,7 @@ void ConsoleGame::makeMove() {
 }
 
 bool ConsoleGame::gameEnded() {
-    return player1.getCurrentHealth() <= 0 || player2.getCurrentHealth() <= 0 || quit;
+    return player1.getCurrentHealth() <= 0 || player2.getCurrentHealth() <= 0;
 }
 
 void ConsoleGame::printWinner() {
