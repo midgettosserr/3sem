@@ -21,7 +21,7 @@ private:
     Summoner *currentPlayer;
     //int x1, y1, x2, y2, x, y;
 
-    int x, int y;
+    int x, y;
 
     bool quit;
 

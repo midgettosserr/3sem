@@ -4,7 +4,6 @@
 #include <string>
 #include <map>
 
-//класс призыватель
 class Summoner {
 private:
 	std::string name;
@@ -13,11 +12,21 @@ private:
 	int currentHealth;
 	int maxEnergy;
 	int currentEnergy;
-	double accumKoef;	//коэффициент аккумуляции
+	double accumKoef;
 	int experience;
-	std::map<std::string, int> schoolKnowledge;//значение владения каждой школой
+	std::map<std::string, int> schoolKnowledge;
 public:
-	Summoner(std::string name = "", int initiative = 0, int maxHealth = 0, int currentHealth = 0, int maxEnergy = 0, int currentEnergy = 0, double accumKoef = 0, int experience = 0, const std::map<std::string, int>& schoolKnowledge = std::map<std::string, int>());
+	Summoner(std::string name = "", 
+		int initiative    = 0, 
+		int maxHealth     = 0, 
+		int currentHealth = 0, 
+		int maxEnergy     = 0, 
+		int currentEnergy = 0, 
+		double accumKoef  = 0, 
+		int experience    = 0, 
+		const std::map<std::string, 
+		int>& schoolKnowledge = std::map<std::string, int>()
+	);
 
 	std::string getName() const {return name;}
 	int getInitiative() const {return initiative;}
@@ -41,8 +50,10 @@ public:
 
 	void accumulateEnergy();
 	void gainExperience();
-	void improveSchool(std::string school);
+	void improveSchool(std::string school, int exp);
 	void makeDamage(int damage);
+
+	void decreaseInitiative() {initiative--;}
 };
 
 #endif

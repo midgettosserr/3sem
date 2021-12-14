@@ -1,11 +1,8 @@
 #include "ConsoleGame.h"
-#include <vector>
 #include <iostream>
-//#include <fstream>
-//#include <sstream>
 
 template<class T>
-void input(T &data) {
+void input(T& data) {
     while (!(std::cin >> data)) {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -15,11 +12,9 @@ void input(T &data) {
 }
 
 template<>
-void input(std::string &data) {
+void input(std::string& data) {
     getline(std::cin, data);
 }
-
-//bool quit;
 
 void ConsoleGame::printMap() const {
     char userSquad = 'a';
@@ -62,19 +57,14 @@ void ConsoleGame::printMap() const {
 }
 
 bool ConsoleGame::mainMenu() {
-    int i, j, i1, j1;
-    AmoralSquad *squad = findSquadToMove(i, j);
-    std::cout << "Следующий ход:" << std::endl;
-    std::cout << currentPlayer->getName() << std::endl;
-    printMap();
     std::cout << "g - сделать передвижение в указанную точку" << std::endl;
-    std::cout << "a - атаковать указанную точкуу" << std::endl;
+    std::cout << "a - атаковать указанную точку" << std::endl;
     std::cout << "h - восстановить свой отряд" << std::endl;
     std::cout << "r - аккумулировать энергию" << std::endl;
     std::cout << "c - меню призыва" << std::endl;
     std::cout << "o - меню улучшения школы" << std::endl;
     //std::cout << "f - выстрелить указанную точку" << std::endl;
-    std::cout << "s - выйти и сохранить игру в файл" << std::endl;
+    //std::cout << "s - выйти и сохранить игру в файл" << std::endl;
     char option;
     input(option);
     int i, j, i1, j1;
@@ -85,12 +75,13 @@ bool ConsoleGame::mainMenu() {
             return false;
         }
         else if (squad->getInitiative() < currentPlayer->getInitiative()) {
-            std::cout << "Инициатива отряда меньше инициативы призывателя: выберите r, c или о" << std::endl;
+            std::cout << "Инициатива отряда меньше инициативы призывателя: выберите r, c или o" << std::endl;
             return false;
         }
     }
-    if (squad && (option == 'r' || option == 'c' || option == 'o') && squad->getInitiative() > currentPlayer->getInitiative()) {
-        std::cout << "Инициатива отряда больше иницативы призывателя: выберите g, a или h" << std::endl;
+    if (squad && (option == 'r' || option == 'c' || option == 'o') &&
+        squad->getInitiative() > currentPlayer->getInitiative()) {
+        std::cout << "Инициатива отряда больше инициативы призывателя: выберите g, a или h" << std::endl;
         return false;
     }
     switch (option) {
@@ -99,18 +90,18 @@ bool ConsoleGame::mainMenu() {
             std::cout << "Введите координаты точки, в которую необходимо переместить отряд: ";
             input(i1);
             input(j1);
-            if (squad->getSpeed() < abs(i - i1) + abs(j - j1)) {
+            if (squad->getSpeed() < abs(i-i1) + abs(j-j1)) {
                 std::cout << "Недостаточная скорость! Отряд не перемещен" << std::endl;
                 return false;
             }
             try {
-                level.setSquad(i1, j1, level.removeSquad(i, j));
+                level.setSquad(i1, j1, squad);
             }
-            catch (const std::exception &ex) {
-                std::cout << "Не удалось переместить отряд: " << ex.what() << std::endl;
-                level.setSquad(i, j, squad);
+            catch (const std::exception& ex) {
+                std::cout << "Не удалось переместить отряд: "  << ex.what() << std::endl;
                 return false;
             }
+            level.setCell(CellEmpty, i, j);
             squad->decreaseInitiative();
             std::cout << "Отряд успешно перемещен" << std::endl;
             return true;
@@ -123,7 +114,7 @@ bool ConsoleGame::mainMenu() {
                 std::cout << "Некорректные координаты!" << std::endl;
                 return false;
             }
-            if (squad->getSpeed() < abs(i-i1) + abs(j-j1)){
+            if (squad->getSpeed() < abs(i-i1) + abs(j-j1)) {
                 std::cout << "Недостаточная скорость!" << std::endl;
                 return false;
             }
@@ -131,16 +122,16 @@ bool ConsoleGame::mainMenu() {
                 std::cout << "В указанной точке нет вражеского отряда!" << std::endl;
                 return false;
             }
-            std::cout << "Численность атакованного отряда до атаки: " << level.getSquad(i1, j1)->getCount() <<std::endl;
-            level.getSquad(i1, j1) ->makeDamageTo(squad->getDamageFrom());
+            std::cout << "Численность атакованого отряда до атаки: " << level.getSquad(i1, j1)->getCount() << std::endl;
+            level.getSquad(i1, j1)->makeDamageTo(squad->getDamageFrom());
             if (NormalSquad *s = dynamic_cast<NormalSquad*>(squad)) {
-                s->increaseMoral;
+                s->increaseMoral(5);
             }
-            std::cout << "Численность атакованного отряда после атаки: " << level.getSquad(i1, j1)->getCount() << std::endl;
+            std::cout << "Численность атакованого отряда после атаки: " << level.getSquad(i1, j1)->getCount() << std::endl;
             squad->decreaseInitiative();
             return true;
         case 'h':
-            if (AmoralResurrectedSquad *s = dynamic_cast<AmoralResurrectedSquad>(squad)) {
+            if (AmoralResurrectedSquad *s = dynamic_cast<AmoralResurrectedSquad*>(squad)) {
                 std::cout << "Численность отряда до попытки воскрешения: " << s->getCount() << std::endl;
                 s->resurrect();
                 s->decreaseInitiative();
@@ -152,7 +143,7 @@ bool ConsoleGame::mainMenu() {
                 return false;
             }
         case 'r':
-            std::cout << "Энергия призываетля была: " << currentPlayer->getCurrentEnergy() << std::endl;
+            std::cout << "Энергия призывателя была: " << currentPlayer->getCurrentEnergy() << std::endl;
             currentPlayer->accumulateEnergy();
             currentPlayer->decreaseInitiative();
             std::cout << "Энергия призывателя стала: " << currentPlayer->getCurrentEnergy() << std::endl;
@@ -161,18 +152,85 @@ bool ConsoleGame::mainMenu() {
             return summonMenu();
         case 'o':
             return schoolMenu();
-        //case 's':
-            //return false;
         default:
             std::cout << "Неверный пункт меню, повторите выбор" << std::endl;
             return false;
     }
 }
 
-bool summonMenu();
-bool schoolMenu();
+bool ConsoleGame::summonMenu() {
+    std::cout << "Меню призыва" << std::endl;
+    std::cout << "Список школ:" << std::endl;
+    for (Table::iterator it = table.begin(); it != table.end(); it++) {
+        std::cout << it->getName() << std::endl;
+        for (School::iterator it2 = it->begin(); it2 != it->end() ; it2++) {
+            std::cout << "\t" << it2->getName() << " - " << it2->getCreature() << std::endl;
+            std::cout << "\tМинимальное знание школы: " << it2->getMinKnowledge() << std::endl;
+        }
+    }
+    std::string schoolname, skillname;
+    std::cout << "Введите школу: ";
+    input(schoolname);
+    std::cout << "Введите умение: ";
+    input(skillname);
+    try {
+        Skill *skill = table.getSkill(schoolname, skillname);
+        int knowledge;
+        try {
+            knowledge = currentPlayer->getSchoolKnowledge(schoolname);
+        }
+        catch (const std::out_of_range&) {
+            knowledge = 0;
+        }
+        if (skill->getMinKnowledge() <= knowledge) {
+            int x, y;
+            if (findEmptyCell(x, y)) {
+                AmoralSquad *sq = new AmoralSquad(skill->getCreature(), schoolname);
+                sq->setSummoner(currentPlayer);
+                level.setSquad(x, y, sq);
+                currentPlayer->decreaseInitiative();
+            }
+            else {
+                std::cout << "Нет свободных клеток для отряда" << std::endl;
+            }
+        }
+        else {
+            std::cout << "Знание школы (" << knowledge << ") недостаточно для призыва" << std::endl;
+            return false;
+        }
+    }
+    catch (const std::out_of_range& ex) {
+        std::cout << "Некорректная школа или умение: " << ex.what() << std::endl;
+        return false;
+    }
+    return true;
+}
 
-AmoralSquad *ConsoleGame::findSquadToMove(int &x, int &y) {
+bool ConsoleGame::schoolMenu() {
+    std::cout << "Меню улучшения школы" << std::endl;
+    std::cout << "Список школ:" << std::endl;
+    for (Table::iterator it = table.begin(); it != table.end(); it++) {
+        std::cout << it->getName() << std::endl;
+    }
+    std::string schoolname;
+    std::cout << "Введите школу для улучшения: ";
+    input(schoolname);
+    std::cout << "Текущий опыт " << currentPlayer->getExperience() << std::endl;
+    std::cout << "Потратить на улучшение: ";
+    int exp;
+    input(exp);
+    try {
+        currentPlayer->improveSchool(schoolname, exp);
+        currentPlayer->decreaseInitiative();
+    }
+    catch (const std::out_of_range& ex) {
+        std::cout << "Ошибка ввода опыта" << std::endl;
+        return false;
+    }
+    return true;
+}
+
+AmoralSquad* ConsoleGame::findSquadToMove(int &x, int &y) const {
     AmoralSquad *squad = nullptr;
     for (int i = 0; i < level.getCols(); i++) {
         for (int j = 0; j < level.getRows(); j++) {
@@ -185,17 +243,12 @@ AmoralSquad *ConsoleGame::findSquadToMove(int &x, int &y) {
             }
         }
     }
-    if (squad && squad->getInitiative() > currentPlayer->getInitiative()) {
-        currentPlayer = squad->getSummoner();
-        this->x = currentPlayer == &player1 ? x1 : x2;
-        this->y = currentPlayer == &player2 ? y1 : y2;
-    }
     return squad;
 }
 
 bool ConsoleGame::findEmptyCell(int &x, int &y) const {
     for (int i = 0; i < level.getCols(); i++) {
-        for (int j = 0; j < getRows(); j++) {
+        for (int j = 0; j < level.getRows(); j++) {
             if (level.getCell(i, j) == CellEmpty) {
                 x = i;
                 y = j;
@@ -206,14 +259,13 @@ bool ConsoleGame::findEmptyCell(int &x, int &y) const {
     return false;
 }
 
+
 /*bool readSkillsFromFile();
 bool readMapFromFile();
-
 bool saveGame(std::string filename);
 bool loadGame(std::string filename);*/
 
-
-ConsoleGame::ConsoleGame() : level(10, 10), player1("Первый призыватель", 100, 100, 100, 100, 100, 0.5, 100), player2("Второй призыватель", 100, 100, 100, 100, 100, 0.5, 100) {
+ConsoleGame::ConsoleGame() : level(20, 20), player1("Первый призыватель", 100, 100, 100, 100, 100, 0.5, 100), player2("Второй призыватель", 100, 100, 100, 100, 100, 0.5, 100) {
     currentPlayer = &player1;
     level.setCell(CellSummoner, 0, 0);
     x = 0;
@@ -226,13 +278,12 @@ ConsoleGame::ConsoleGame() : level(10, 10), player1("Первый призыва
 }
 
 ConsoleGame::~ConsoleGame() {
-
+    
 }
 
 void ConsoleGame::startNewGame() {
     
 }
-
 
 void ConsoleGame::makeMove() {
     printMap();
@@ -260,5 +311,5 @@ bool ConsoleGame::gameEnded() {
 
 void ConsoleGame::printWinner() {
     Summoner *winner = player1.getCurrentHealth() > player2.getCurrentHealth() ? &player1 : &player2;
-    std::cout << "Игра окончена! Победитель: " << winner->getName() << std::endl;
+    std::cout << winner->getName() << std::endl;
 }
