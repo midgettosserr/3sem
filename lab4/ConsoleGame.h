@@ -19,36 +19,34 @@ private:
     Summoner player1;
     Summoner player2;
     Summoner *currentPlayer;
-    //int x1, y1, x2, y2, x, y;
+    int x1, y1, x2, y2, x, y;
 
-    int x, y;
+    //int x, y;
 
     bool quit;
-
+    
     void printMap() const;
-
+    
     bool mainMenu();
     bool summonMenu();
     bool schoolMenu();
-
-    AmoralSquad *findSquadToMove(int &x, int &y) const;
+    
+    AmoralSquad* findSquadToMove(int &x, int &y);
     bool findEmptyCell(int &x, int &y) const;
-
-    /*bool readSkillsFromFile();
+    
+    bool readSkillsFromFile();
     bool readMapFromFile();
     bool saveGame(std::string filename);
-    bool loadGame(std::string filename);*/
-
+    bool loadGame(std::string filename);
 public:
-    ConsoleGame();
+    ConsoleGame(std::string firstName, std::string secondName, bool loadFromFile = false, std::string filename = "");
     ~ConsoleGame();
 
     void startNewGame();
-
+    
     void makeMove();
     bool gameEnded();
     void printWinner();
-
 };
 
 #endif

@@ -1,6 +1,6 @@
 #include "AmoralSquad.h"
 
-AmoralSquad::AmoralSquad(std::string creatureName, const School& school, int initiative,
+AmoralSquad::AmoralSquad(std::string creatureName, std::string school, int initiative,
              int speed, int damage, int protection, int count, int experience) :
             creatureName(creatureName), school(school), initiative(initiative), speed(speed),
             damage(damage), protection(protection), count(count), experience(experience), firstCount(count) {
@@ -11,7 +11,7 @@ void AmoralSquad::setCreatureName(std::string name) {
     this->creatureName = name;
 }
 
-void AmoralSquad::setSchool(const School& school) {
+void AmoralSquad::setSchool(std::string school) {
     this->school = school;
 }
 

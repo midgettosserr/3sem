@@ -71,11 +71,14 @@ void Summoner::setSchoolKnowledge(std::string school, int knowledge) {
 }
 
 void Summoner::accumulateEnergy() {
-    currentEnergy = maxEnergy;
+    currentEnergy += currentEnergy * accumKoef;
+    if (currentEnergy > maxEnergy) {
+        currentEnergy = maxEnergy;
+    }
 }
 
-void Summoner::gainExperience() {
-    experience++;
+void Summoner::gainExperience(int exp) {
+    experience += exp;
 }
 
 void Summoner::improveSchool(std::string school, int exp) {

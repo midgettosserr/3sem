@@ -1,13 +1,11 @@
 #include "School.h"
 #include <algorithm>
 
-#include <stdexcept>
-
-void School::addSkill(const Skill& skill) {
+void School::addSkill(const Skill &skill) {
     skills.push_back(skill);
 }
 
-std::string School::getCreature(std::string skill) const {
+Skill::Creature School::getCreature(std::string skill) const {
     mycontainers::vector<Skill>::const_iterator it = std::find(skills.cbegin(), skills.cend(), skill);
     if (it != skills.cend()) {
         return it->getCreature();
@@ -27,7 +25,7 @@ Skill *School::getSkill(std::string skill) {
     }
 }
 
-void School::setCreature(std::string skill, std::string creature) {
+void School::setCreature(std::string skill, Skill::Creature creature) {
     mycontainers::vector<Skill>::iterator it = std::find(skills.begin(), skills.end(), skill);
     if (it != skills.end()) {
         return it->setCreature(creature);

@@ -1,13 +1,11 @@
 #include "Table.h"
 #include <algorithm>
 
-#include <stdexcept>
-
 void Table::addSchool(std::string school) {
     schools.push_back(School(school));
 }
 
-void Table::addSkill(std::string school, const Skill& skill) {
+void Table::addSkill(std::string school, const Skill &skill) {
     mycontainers::vector<School>::iterator it = std::find(schools.begin(), schools.end(), school);
     if (it != schools.end()) {
         it->addSkill(skill);
@@ -17,7 +15,7 @@ void Table::addSkill(std::string school, const Skill& skill) {
     }
 }
 
-std::string Table::getCreature(std::string school, std::string skill) const {
+Skill::Creature Table::getCreature(std::string school, std::string skill) const {
     mycontainers::vector<School>::const_iterator it = std::find(schools.cbegin(), schools.cend(), school);
     if (it != schools.cend()) {
         return it->getCreature(skill);
@@ -37,7 +35,7 @@ Skill *Table::getSkill(std::string school, std::string skill) {
     }
 }
 
-void Table::setCreature(std::string school, std::string skill, std::string creature) {
+void Table::setCreature(std::string school, std::string skill, Skill::Creature creature) {
     mycontainers::vector<School>::iterator it = std::find(schools.begin(), schools.end(), school);
     if (it != schools.end()) {
         return it->setCreature(skill, creature);
